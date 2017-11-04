@@ -26,9 +26,9 @@ app.get('/', function(req, res) {
         res.send("Нехватает данных");
     }
     autologinlink = autologinlink.replace(/&amp;/g, "&");
-    //console.dir(autologinlink);
-    //console.dir(proxynow);
-    //console.dir(likeid);
+    console.dir(autologinlink);
+    console.dir(proxynow);
+    console.dir(likeid);
 
     var webdriver = require('selenium-webdriver'),
         By = webdriver.By,
