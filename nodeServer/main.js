@@ -1,29 +1,24 @@
-//var login = 'bro-dev';
-//var pass = '7q8a9z4w5s6x7q8a9z4w5s6x';
-//var accto = process.argv[2];
-//var message =  process.argv[3];
-//
-//console.dir(accto);
-//console.dir(message);
-
 var express = require('express');
 var app = express();
-
-// respond with "hello world" when a GET request is made to the homepage
-
 
 app.listen(9999, () => {
     console.log('We are live on ');
 });
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
     var autologinlink = req.query.autologinlink;
     var proxynow = req.query.proxynow;
     var likeid = req.query.likeid;
+    var brores = {
+        status: 0,
+        text: "Не задано",
+        img: "",
+    };
     if (autologinlink == undefined ||
         proxynow == undefined ||
         likeid == undefined) {
-        res.send("Нехватает данных");
+        res.json(brores);
+        throw brores.text;
     }
     autologinlink = autologinlink.replace(/&amp;/g, "&");
     console.dir(autologinlink);
@@ -41,89 +36,77 @@ app.get('/', function(req, res) {
         .forBrowser('phantomjs')
         .setProxy(proxy.manual({ http: proxynow }))
         .build();
-    driver.manage().timeouts().pageLoadTimeout(22222);
+    driver.manage().timeouts().pageLoadTimeout(5555);
 
-    var broWaitByCss = function(css, t = 22222) {
-        driver.wait(until.elementLocated(By.css(css)), t).then(function() {
-            driver.wait(until.elementIsVisible(driver.findElement(By.css(css))), t).then(function() {
-                driver.sleep(111);
-            }, function() {
-                driver.sleep(111);
+    var broWait = function(css, t = 5555) {
+        return new Promise((resolve, regect) => {
+            driver.wait(until.elementLocated(By.css(css)), t).then(() => {
+                return driver.wait(until.elementIsVisible(driver.findElement(By.css(css))), t);
+            }).then(() => {
+                resolve();
+            }, () => {
+                regect();
             });
-        }, function() {
-            driver.sleep(111);
         });
+    }
 
-    }
-    var broWaitByCssAndClick = function(css, t) {
-        broWaitByCss(css, t);
-        driver.findElement(By.css(css)).click().then(function() {
-            driver.sleep(111);
-        }, function() {
-            driver.sleep(111);
-        });
-    }
-    var broWaitByCssAndSend = function(css, mess, t) {
-        broWaitByCss(css, t);
-        driver.findElement(By.css(css)).sendKeys(mess).then(function() {
-            driver.sleep(111);
-        }, function() {
-            driver.sleep(111);
-        });
+    var errorAlredy = false;
+    var broErr = function(text) {
+
+        if (errorAlredy) {
+            throw text;
+        } else {
+            errorAlredy = true;
+            brores.text = text;
+            console.log(text);
+            return driver.takeScreenshot().then((data) => {
+                var base64Data = data.replace(/^data:image\/png;base64,/, "");
+                var out = "<img src='data:image/png;base64," + data + "'>";
+                brores.img = out;
+                res.json(brores);
+
+            }, () => {
+                brores.text = "не удалость сделать скрин";
+                res.json(brores);
+
+            }).then(() => {
+                throw brores.text
+            });
+        }
     }
 
     driver.get('https://fotostrana.ru').then(() => {
-        driver.sleep(111);
+        return broWait("#footer .nclear");
     }, () => {
-        driver.sleep(111);
-    });
-    var brook = "neok";
-    driver.wait(until.elementLocated(By.css('#VKADSRetarget')), 22222).then(function() {
-        brook = "ok";
-        driver.get(autologinlink).then(function() {
-            driver.sleep(111);
-
-            driver.get("https://fotostrana.ru/rating/?viewUserId=" + likeid).then(() => {
-                var scrinname = proxynow.replace(/\./g, "").replace(/:/g, "") + ".png";
-                var base64Data = "emply";
-                driver.takeScreenshot().then((data) => {
-                    base64Data = data.replace(/^data:image\/png;base64,/, "");
-                    var out = "";
-                    out += brook;
-                    out += "<img src='data:image/png;base64," + data + "'>"
-                    res.send(out);
-                    /*fs.writeFile(scrinname, base64Data, 'base64', function(err) {
-                        if (err) console.log(err);
-                    });*/
-                });
-                driver.quit();
-
-            }, () => { res.status(408).send("Прокси не работает"); });
-
-        }, function() {
-            driver.sleep(111);
-        });;
-
-    }, function() {
-        res.send("Прокси не работает");
+        return broErr("Главная не загружена");
+    }).then(() => {
+        return driver.get(autologinlink);
+    }, () => {
+        return broErr("Главная загружена не полностью");
+    }).then(() => {
+        return broWait(".btn-registr", 7777).then(() => {
+            broErr("Автологин не действителен");
+        }, () => {
+            return broWait(".ban-block-karavaggio", 7777);
+        }).then(() => {
+            broErr("Аккаунт заблокирован");
+        }, () => {
+            return driver.get("https://fotostrana.ru/rating/?viewUserId=" + likeid);
+        });
+    }, () => {
+        return broErr("Проблемы с авторизацией");
+    }).then(() => {
+        return broWait("#fsr-photo-like-fs .ibtn-disabled", 7777);
+    }, () => {
+        return broErr("Не удалось зайти на страницу с фото");
+    }).then((data) => {
+        return broErr("Лайк не засчитан");
+    }, () => {
+        return broErr("Лайк засчитан");
+    }).catch((er) => {
+        //brores.text = "Что то пошло не так";
         driver.quit();
+        console.log(er);
+        //res.json(er);
     });
-
-
-
 });
-
-//broWaitByCssAndSend('#username', login);
-//broWaitByCssAndClick('#signIn');
-//broWaitByCssAndSend('#i0118', pass);
-//broWaitByCssAndClick('#idSIButton9');
-//broWaitByCssAndSend('.search .input input', accto);
-//broWaitByCssAndClick('.search .results .searchDirectory');
-//broWaitByCssAndClick('.swx .side .searchItem');
-//broWaitByCssAndClick('.conversation .contactRequestSend', 3333);
-//broWaitByCssAndClick('.conversation .contactRequestResendMessage a', 3333);
-//message.split("\n").forEach((el)=>{
-//broWaitByCssAndSend('#chatInputContainer textarea', el);
-//broWaitByCssAndClick('.swx-chat-input-send-btn');
-//driver.sleep(111);
-//});

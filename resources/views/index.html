@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+  <style type="text/css">
+
+  	.spoiler-text{
+  		display: none;
+  	}
+
+  </style>
+</head>
+<body>
+
+	ид кого лайкать
+	<input type="text" name="" id="idlile" value="81099774">
+<textarea id="proxy" wrap=hard>45.55.86.49:8080
+165.84.167.54:8080
+198.27.115.40:8080
+213.111.145.3:8080
+67.205.178.247:8080
+107.182.111.102:8080
+36.85.247.127:8080
+178.33.76.75:8080
+50.204.46.173:8080
+50.201.51.216:8080
+162.243.15.104:8080
+192.241.184.169:8080
+66.102.228.123:8080
+82.137.250.213:8080
+59.126.48.8:8080
+107.178.4.109:8080
+198.50.219.232:8080
+190.0.0.174:8080
+64.56.217.45:8080
+198.50.240.19:8080
+138.197.137.90:8080
+197.248.17.18:8080
+5.152.158.4:8080
+104.236.27.71:8080
+24.37.176.38:8080
+142.147.117.1:8080
+45.77.136.105:8080
+104.236.253.55:8080
+37.59.62.38:8080
+81.163.106.86:8080
+162.243.33.71:8080
+5.16.0.57:8080
+62.141.111.144:8080
+104.131.94.221:8080
+212.191.32.83:8080
+85.159.2.171:8080
+162.243.140.150:8080
+180.183.246.12:8080
+45.55.27.246:8080
+45.32.160.198:8080
+47.89.241.103:8080
+104.219.251.133:31894
+162.144.221.185:40885
+23.105.192.103:80
+23.227.190.125:80
+162.144.221.185:5273
+97.74.230.115:47468
+192.254.170.6:80
+67.205.191.44:8087
+40.68.255.214:8080</textarea>
+<textarea id=autologin wrap=hard>https://fotostrana.ru/user/autologin/?u=87323053&eRf=300&h=%242y%2404%24HKbZ1X1XrXE0BTmrMrJy.u.gB%2FnKd69oTPbU.0kWMsS5EgIyjd.7G&mobile_send_enabled=0&t=300&v=2&time=1467864537&to_url=%2F
+https://fotostrana.ru/user/autologin/?u=87333854&eRf=300&h=%242y%2404%24iX9rQn9X3ps0BQbcD6UseukQ19cJpVlJXUPS%2Fo0zFiEfA8coICDAm&mobile_send_enabled=0&t=300&v=2&time=1467957867&to_url=%2F
+http://fotostrana.ru/user/autologin/?u=83464157&eRf=300&h=%242y%2404%241NinYt9V3Y%2F5BAQTCSph.OmgCv7xVowQcH842LcauGtHDkZCW5Dim&mobile_send_enabled=0&t=300&v=2&time=1440703143&to_url=%2Fuser%2Fconfirm%2F%3Fu%3D83464157%26c%3D%242y%2404%24o.8uyGdempGqIf.dw79yI.ie0BYd8CRng7GryGKychDItG9suDlKK%26returnUrl%3D%252Fmeeting%252F
+http://fotostrana.ru/user/autologin/?u=83464215&eRf=300&h=%242y%2404%24TGqSY99VF5D5BE5OvgwcmeIazLzYby.ZTLSS6i9Tn2KT9TcvWP9Uq&mobile_send_enabled=0&t=300&v=2&time=1440703378&to_url=%2Fuser%2Fconfirm%2F%3Fu%3D83464215%26c%3D%242y%2404%248lY8RQ4VTMvbFec7tbdLd.i5ffYyJNir6nG4q94Rh6bQUfxqcv1Ge%26returnUrl%3D%252Fmeeting%252F
+http://fotostrana.ru/user/autologin/?u=83464264&eRf=300&h=%242y%2404%2406FkZN9VSJD5BJmJfUtwH.TICQ4fr5s5MhWQq2Ec5QXcBHXrh0DPK&mobile_send_enabled=0&t=300&v=2&time=1440703588&to_url=%2Fuser%2Fconfirm%2F%3Fu%3D83464264%26c%3D%242y%2404%24k2R3AX7XT4z8Twp3f2MCi.Lx4KsbNRuov9BCax9ArJWArsJyeFC5i%26returnUrl%3D%252Fmeeting%252F
+http://fotostrana.ru/user/autologin/?u=83464302&eRf=300&h=%242y%2404%247fklZd9VbpD5BG%2FiW0ZqaufrPTwLsxWMKOcEJuahAcEBd0F3WYeki&mobile_send_enabled=0&t=300&v=2&time=1440703781&to_url=%2Fuser%2Fconfirm%2F%3Fu%3D83464302%26c%3D%242y%2404%24qUSBFpxy3Tf%2Fa2gWF3hFyOuMYAi5ATDSxVCAiQ1f%2FPvO9kCf%2FpsIa%26returnUrl%3D%252Fmeeting%252F</textarea>
+<button id=start>start</button>
+<div class="out"></div>
+<script type="text/javascript">
+
+	$(function () {
+		$(document).on("click","#start",function(){
+			var proxylist = $("#proxy").html().split("\n");
+			var autologin = $("#autologin").html().split("\n");
+			var out= $(".out");
+			$(this).attr("disabled","true");
+			$(this).html("работаю..")
+			var outlog=function(texto){
+					out.append($("<div>").html(texto));
+			}
+			outlog(" стартую "+autologin.length+" аккаунов");
+
+			var idlile=$("#idlile").val();
+			var  alldone=0;
+			var allneed=autologin.length;
+			var gosite=function(autologinnow){
+				var proxynow=proxylist.pop();
+				if(proxynow==undefined){
+					outlog("кончились прокси");
+					$(this).html("готово");
+					return;
+				}
+
+			$.ajax({
+				url:"/HttpCrosGet.php",
+				data:{
+				url:"http://fotostrananacrut.bro-dev.tk:9999",
+				autologinlink:autologinnow,
+				proxynow:proxynow,
+				likeid	:idlile,
+				}
+			}).done((d)=>{
+				if(d=="Прокси не работает"){
+						outlog("ne ok пробую другую прокси" );
+				gosite(autologinnow);
+				}else{
+				outlog("ok"+`
+<div class="spoiler-wrapper">
+<div class="spoiler folded"><a href="javascript:void(0);">спойлер</a></div>
+<div class="spoiler-text">`+d+`</div>
+</div>
+
+					`);
+				alldone++;
+				}
+				//console.dir(d);
+			}).fail((e)=>{
+				outlog("ne ok пробую другую прокси" );
+				//console.dir(e);
+				gosite(autologinnow);
+			}).always(()=>{
+				if(alldone==allneed){
+				$(this).html("готово");}
+			});
+			};
+
+			autologin.slice(0,1).forEach((el)=>{
+			gosite(el);
+			});
+		});
+		jQuery(document).on("click",".spoiler",function(){
+			jQuery(this).next().slideToggle();
+		});
+	});
+</script>
+</body>
+</html>
