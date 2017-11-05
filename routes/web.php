@@ -20,4 +20,5 @@ Route::get('/test', function () {
 });
 
 Route::get('/proxycheck', 'ProxycheckController@index');
+Route::get('/proxy', 'ProxyController@index');
 Route::get('/getwaytest', 'ProxycheckController@getwaytest')->name('getwaytest');

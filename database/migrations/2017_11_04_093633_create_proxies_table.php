@@ -14,6 +14,7 @@ class CreateProxiesTable extends Migration {
 		Schema::create('proxies', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('ipport')->unique();
+			$table->string('type');
 		});
 	}
 
